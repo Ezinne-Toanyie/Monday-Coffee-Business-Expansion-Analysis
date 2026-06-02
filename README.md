@@ -23,9 +23,7 @@ The project uses a **relational PostgreSQL database** composed of four connected
 
 The database structure supports business intelligence analysis by linking **customer purchases, products, and city-level market information**.
 
-### Database Schema (ERD)
 
-*(Insert ERD Screenshot Here)*
 
 ### Table 1: `city`
 
@@ -42,6 +40,8 @@ Stores city-level information used for market sizing and operating cost analysis
 **Purpose:**
 Used to evaluate **market potential, estimated coffee consumer base, and occupancy cost efficiency**.
 
+![city-table.png](https://i.postimg.cc/yYYQ8FKx/city-table.png)
+
 ---
 
 ### Table 2: `customers`
@@ -57,6 +57,8 @@ Stores customer identity and geographic association.
 **Purpose:**
 Connects customers to cities for **location-based revenue and customer analysis**.
 
+![customers-table.png](https://i.postimg.cc/t4djG3NG/customers-table.png)
+
 ---
 
 ### Table 3: `products`
@@ -71,6 +73,8 @@ Stores product catalog information.
 
 **Purpose:**
 Used to analyse **product popularity, product sales volume, and purchasing patterns**.
+
+![products-table.png](https://i.postimg.cc/4xp9CSSj/products-table.png)
 
 ---
 
@@ -90,7 +94,15 @@ Contains transaction-level sales data.
 **Purpose:**
 Acts as the **core transactional table** used for revenue analysis, customer behaviour analysis, growth tracking, and performance measurement.
 
+![sales-table.png](https://i.postimg.cc/VLxKB2Mr/sales-table.png)
+
+---
+
 ### Entity Relationships
+
+#### Database Schema(ERD)
+
+![Monday-Coffee-ERD.png](https://i.postimg.cc/W3ZRS0zb/Monday-Coffee-ERD.png)
 
 The schema contains three major one-to-many relationships:
 
@@ -113,273 +125,133 @@ This relational design supports:
 
 The analysis was completed using thirteen SQL business questions.
 
-### Question 1 — Coffee Consumer Estimate
+### Question 1: Coffee Consumer Estimate(in millions)
 
-**Objective:**
 Estimate coffee consumers per city by assuming **25% of each city's population** are coffee consumers.
 
-**Tables Used:** `city`
-
-**SQL Concepts Used:**
-
-* SELECT
-* Calculated columns
-* ROUND()
-* ORDER BY
-
-**Key Finding:**
-Cities with larger populations represent stronger long-term market opportunities.
-
-*(Insert output screenshot here)*
+![Q1.png](https://i.postimg.cc/vZQwt1fp/Q1.png)
+#### Data Output
+![Data-Output-1.png](https://i.postimg.cc/63QsJFMW/Data-Output-1.png)
 
 ---
 
-### Question 2 — Total Revenue (Q4 2023)
+### Question 2: Total Revenue (Q4 2023)
 
-**Objective:**
 Calculate total city revenue during **Q4 2023 (October–December)**.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* INNER JOIN
-* SUM()
-* EXTRACT()
-* GROUP BY
-* WHERE filtering
-
-**Key Finding:**
-Pune generated the highest total revenue.
-
-*(Insert output screenshot here)*
+![Q2.png](https://i.postimg.cc/gcCZjp8C/Q2.png)
+#### Data Output
+![Data-Output-2.png](https://i.postimg.cc/hGvjMZVz/Data-Output-2.png)
 
 ---
 
-### Question 3 — Sales Volume by Product
+### Question 3: Sales Volume by Product
 
-**Objective:**
 Identify the highest-selling products.
 
-**Tables Used:** `sales`, `products`
-
-**SQL Concepts Used:**
-
-* COUNT()
-* GROUP BY
-* JOIN
-* ORDER BY
-
-**Key Finding:**
-Best-selling products indicate dominant customer preferences.
-
-*(Insert output screenshot here)*
+![Q3.png](https://i.postimg.cc/t4htpTcJ/Q3.png)
+#### Data Output
+![Data-Output-3.png](https://i.postimg.cc/sDgtBFzx/Data-Output-3.png)
 
 ---
 
-### Question 4 — Average Sales per Customer by City
+### Question 4: Average Sales per Customer by City
 
-**Objective:**
 Measure customer spending behaviour across cities.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* SUM()
-* COUNT(DISTINCT)
-* Aggregation
-* GROUP BY
-
-**Key Finding:**
-Higher average sales per customer suggest stronger customer purchasing power.
-
-*(Insert output screenshot here)*
+![Q4.png](https://i.postimg.cc/Bvz54V38/Q4.png)
+#### Data Output
+![Data-Output-4.png](https://i.postimg.cc/pXPjbHjc/Data-Output-4.png)
 
 ---
 
-### Question 5 — Current Customers vs Estimated Coffee Consumers
+### Question 5: Current Customers vs Estimated Coffee Consumers
 
-**Objective:**
 Compare actual customer counts against estimated market size.
 
-**Tables Used:** `city`, `customers`, `sales`
-
-**SQL Concepts Used:**
-
-* CTEs
-* LEFT JOIN
-* COUNT(DISTINCT)
-
-**Key Finding:**
-Delhi showed the highest estimated coffee consumer market.
-
-*(Insert output screenshot here)*
+![Q5.png](https://i.postimg.cc/pTdS17Zv/Q5.png)
+#### Data Output
+![Data-Output-5.png](https://i.postimg.cc/3wj7HPmz/Data-Output-5.png)
 
 ---
 
-### Question 6 — Top 3 Products per City
+### Question 6: Top 3 Products per City
 
-**Objective:**
 Identify leading products within each city.
 
-**Tables Used:** `sales`, `customers`, `city`, `products`
-
-**SQL Concepts Used:**
-
-* CTE
-* Window Functions
-* RANK()
-* PARTITION BY
-
-**Key Finding:**
-Product demand varies by city.
-
-*(Insert output screenshot here)*
+![Q6.png](https://i.postimg.cc/PqJcS9KQ/Q6.png)
+#### Data Output
+![Data-Output-6.png](https://i.postimg.cc/kGvfJvfC/Data-Output-6.png)
 
 ---
 
-### Question 7 — Unique Customers per City
+### Question 7: Unique Customers per City
 
-**Objective:**
 Measure customer reach per city.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* COUNT(DISTINCT)
-* GROUP BY
-* JOIN
-
-**Key Finding:**
-Jaipur recorded the highest unique customer count.
-
-*(Insert output screenshot here)*
+![Q7.png](https://i.postimg.cc/RhWZ9gMS/Q7.png)
+#### Data Output
+![Data-Output-7.png](https://i.postimg.cc/zfYb7Yqw/Data-Output-7.png)
 
 ---
 
-### Question 8 — Average Sale vs Average Rent per Customer
+### Question 8: Average Sale vs Average Rent per Customer
 
-**Objective:**
 Compare customer spending power against operating cost efficiency.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* Calculated metrics
-* Aggregation
-* GROUP BY
-
-**Key Finding:**
-Jaipur and Pune demonstrated strong rent efficiency.
-
-*(Insert output screenshot here)*
+![Q8.png](https://i.postimg.cc/XY4XBcLR/Q8.png)
+#### Data Output
+![Data-Output-8.png](https://i.postimg.cc/0N6vzbT3/Data-Output-8.png)
 
 ---
 
-### Question 9 — Month-on-Month Sales Growth
+### Question 9: Month-on-Month Sales Growth
 
-**Objective:**
 Measure monthly revenue growth trends.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* DATE_TRUNC()
-* LAG()
-* Window Functions
-* CTEs
-
-**Key Finding:**
-Positive month-on-month growth indicates expanding demand.
-
-*(Insert output screenshot here)*
+![Q9.png](https://i.postimg.cc/qMYjkqGB/Q9.png)
+#### Data Output
+![Data-Output-9.png](https://i.postimg.cc/4yfFh0Kd/Data-Output-9.png)
 
 ---
 
-### Question 10 — Market Potential Summary
+### Question 10: Market Potential Summary
 
-**Objective:**
-Build a consolidated market performance comparison.
+Build a consolidated market performance comparison using revenue, customer count, rent and estimated consumer size.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* Aggregations
-* Calculated fields
-* GROUP BY
-* Multi-table JOINs
-
-**Key Finding:**
-Cities can be evaluated simultaneously using revenue, customers, rent, and estimated consumer size.
-
-*(Insert output screenshot here)*
+![Q10.png](https://i.postimg.cc/0y0n7ns7/Q10.png)
+#### Data Output
+![Data-Output-10.png](https://i.postimg.cc/mrh9hyZw/Data-Output-10.png)
 
 ---
 
-### Question 11 — Highest Average Product Rating by City
+### Question 11: Highest Average Product Rating by City
 
-**Objective:**
 Evaluate customer experience and satisfaction levels.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* AVG()
-* Aggregation
-* NULL filtering
-
-**Key Finding:**
-Higher average ratings suggest stronger product-market fit.
-
-*(Insert output screenshot here)*
+![Q11.png](https://i.postimg.cc/J42MMNgD/Q11.png)
+#### Data Output
+![Data-Output-11.png](https://i.postimg.cc/zGvvkXmw/Data-Output-11.png)
 
 ---
 
-### Question 12 — Revenue Concentration Analysis
+### Question 12: Revenue Concentration Analysis
 
-**Objective:**
 Determine whether city revenue depends heavily on top-spending customers.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* NTILE()
-* CASE expressions
-* Window Functions
-* CTEs
-
-**Key Finding:**
-Lower revenue concentration indicates broader customer participation.
-
-*(Insert output screenshot here)*
+![Q12.png](https://i.postimg.cc/3JV5PK4J/Q12.png)
+#### Data Output
+![Data-Output-12.png](https://i.postimg.cc/xCT4X7N8/Data-Output-12.png)
 
 ---
 
-### Question 13 — Average Days Between Purchases
+### Question 13: Average Days Between Purchases
 
-**Objective:**
 Measure repeat purchasing behaviour and customer loyalty.
 
-**Tables Used:** `sales`, `customers`, `city`
-
-**SQL Concepts Used:**
-
-* LAG()
-* Date calculations
-* Window Functions
-* CTEs
-
-**Key Finding:**
-Shorter repurchase intervals indicate stronger customer loyalty.
-
-*(Insert output screenshot here)*
+![Q13.png](https://i.postimg.cc/C58X08ff/Q13.png)
+#### Data Output
+![Data-Output-13.png](https://i.postimg.cc/tTM2YgHz/Data-Output-13.png)
 
 ---
 
@@ -393,13 +265,6 @@ The analysis identified the strongest expansion candidates:
 | Delhi  | Largest estimated consumer market and long-term growth opportunity |
 | Jaipur | Highest customer count and lowest rent per customer                |
 
-### Recommended Expansion Order
-
-1. **Pune**
-2. **Delhi**
-3. **Jaipur**
-
-*(Insert result screenshots and summary visuals here.)*
 
 ---
 
@@ -458,9 +323,9 @@ Jaipur stands out because it offers:
 
 A phased launch strategy is recommended:
 
-**Phase 1:** Pune
-**Phase 2:** Delhi
-**Phase 3:** Jaipur
+* **Phase 1:** Pune
+* **Phase 2:** Delhi
+* **Phase 3:** Jaipur
 
 This balances **immediate profitability, long-term growth potential, and operational efficiency**.
 
